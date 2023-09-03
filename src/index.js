@@ -1,5 +1,6 @@
 const os = require('os')
 const express = require('express')
+const {indexController} = require('./controller')
 
 const app = express()
 
@@ -11,8 +12,11 @@ app.use((req, res, next) => {
   next()
 })
 
-app.get('/', (req, res) => {
-  res.html('<!doctype html><html><body><h1>Hello World!</h1></body></html>')
+app.get('/', indexController)
+
+app.use((err, req, res, next) => {
+  console.error(err)
+  res.status(500).send('Internal Server Error!')
 })
 
 exports.app = app
